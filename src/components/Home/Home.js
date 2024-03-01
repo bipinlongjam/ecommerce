@@ -1,6 +1,9 @@
 import React from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import generic from '../../assests/generic.png'
+import './Home.css'
 
 const Home = () => {
 
@@ -40,10 +43,16 @@ const Home = () => {
     <Container fluid>
         <Row className="justify-content-center align-items-center ">
           <img src={generic} alt="Image" lassName="img-fluid" style={{ width: '100%', height: '350px' }} />
+          <div className="overlay">
+          <Button className="album-btn" style={{ marginTop: '50px',backgroundColor: 'transparent', color:'black' }}>Get our latest album</Button>
+          <div className="play-icon-circle">
+            <FontAwesomeIcon icon={faPlay} className="play-icon" />
+          </div>
+        </div>
       </Row>
     <Container>
     <Col className="text-center mb-5 ">
-          <h2 className="mt-3">Tour Dates</h2>
+          <h2 className="mt-3">TOURS</h2>
         </Col>
     {tourData.map((tour, index) => (
         <div key={index} >
