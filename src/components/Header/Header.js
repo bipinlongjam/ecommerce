@@ -11,7 +11,29 @@ const Header = () => {
     const handleCloseCartModal = () => setShowCartModal(false);
 
     const location = useLocation();
-
+    const [cartElements, setCartElements] = useState([
+        {
+          id: 1,
+          title: 'Colors',
+          price: 100,
+          imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%201.png',
+          quantity: 2,
+        },
+        {
+          id: 2,
+          title: 'Black and white Colors',
+          price: 50,
+          imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%202.png',
+          quantity: 3,
+        },
+        {
+          id: 3,
+          title: 'Yellow and Black Colors',
+          price: 70,
+          imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%203.png',
+          quantity: 1,
+        }
+      ]);
     const handleCheckout = () => {
         if (cartItems.length === 0) {
           alert('No products in the cart!');
@@ -21,6 +43,16 @@ const Header = () => {
         }
       };
       const isStorePage = location.pathname === '/store';
+
+      const totalAmount = cartElements.reduce((total, item) =>{
+        return total + (item.price * item.quantity);
+      },0)
+
+      const handleRemoveItem = (id) => {
+        const updatedCart = cartElements.filter(item => item.id !== id);
+        setCartElements(updatedCart);
+      };
+
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
     <Container>
@@ -45,26 +77,33 @@ const Header = () => {
           <Modal.Title>Shopping Cart</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        <Table bordered>
+          <Table striped bordered hover>
             <thead>
               <tr>
+                <th>Pic</th>
+                <th>Title</th>
                 <th>Price</th>
-                <th>Item</th>
                 <th>Quantity</th>
+                <th>Total</th>
               </tr>
             </thead>
             <tbody>
+              {cartElements.map((item, index) => (
+                <tr key={item.id}>
+                  <td><img src={item.imageUrl} alt={item.title} style={{ width: '100px' }} /></td>
+                  <td>{item.title}</td>
+                  <td>${item.price}</td>
+                  <td>{item.quantity}</td>
+                  <td>${item.price * item.quantity}</td>
+                  <td>
+                    <Button variant="danger" onClick={() => handleRemoveItem(item.id)}>Remove</Button> {/* Remove button */}
+                  </td>
+                </tr>
+              ))}
               <tr>
-                <td>$10</td>
-                <td>Item 1</td>
-                <td>2</td>
+                <td colSpan="4" className="text-right"><strong>Total:</strong></td>
+                <td>${totalAmount}</td>
               </tr>
-              <tr>
-                <td>$20</td>
-                <td>Item 2</td>
-                <td>1</td>
-              </tr>
-              {/* Add more rows for additional items */}
             </tbody>
           </Table>
         </Modal.Body>
