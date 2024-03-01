@@ -1,39 +1,29 @@
-import React,{useState} from 'react'
+import React,{useState, useEffect} from 'react'
 import {Navbar, Container, Button, Nav, Modal,Table } from 'react-bootstrap'
 import { Link ,useLocation} from 'react-router-dom';
+import {useCart} from '../../context/CartContext'
 import './Header.css'
 
 const Header = () => {
 
+    const [navbarHeight, setNavbarHeight] = useState(0); // State to store navbar height
+    useEffect(() => {
+      // Get the height of the navbar when it mounts
+      const navbar = document.querySelector('.navbar');
+      if (navbar) {
+        const height = navbar.offsetHeight;
+        setNavbarHeight(height);
+      }
+    }, []);
+
+    const {cartElements, totalAmount, removeCartItem,increaseItemQuantity,decreaseItemQuantity } = useCart();
     const [showCartModal, setShowCartModal] = useState(false);
     const [cartItems, setCartItems] = useState([]);
     const handleShowCartModal = () => setShowCartModal(true);
     const handleCloseCartModal = () => setShowCartModal(false);
 
     const location = useLocation();
-    const [cartElements, setCartElements] = useState([
-        {
-          id: 1,
-          title: 'Colors',
-          price: 100,
-          imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%201.png',
-          quantity: 2,
-        },
-        {
-          id: 2,
-          title: 'Black and white Colors',
-          price: 50,
-          imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%202.png',
-          quantity: 3,
-        },
-        {
-          id: 3,
-          title: 'Yellow and Black Colors',
-          price: 70,
-          imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%203.png',
-          quantity: 1,
-        }
-      ]);
+
     const handleCheckout = () => {
         if (cartItems.length === 0) {
           alert('No products in the cart!');
@@ -44,19 +34,20 @@ const Header = () => {
       };
       const isStorePage = location.pathname === '/store';
 
-      const totalAmount = cartElements.reduce((total, item) =>{
-        return total + (item.price * item.quantity);
-      },0)
-
-      const handleRemoveItem = (id) => {
-        const updatedCart = cartElements.filter(item => item.id !== id);
-        setCartElements(updatedCart);
-      };
+    const handleRemoveItem =(id)=>{
+        removeCartItem(id);
+    }
+    const handleIncreaseQuantity =(id) =>{
+        increaseItemQuantity(id);
+    }
+    const handleDecreaseQuantity =(id)=>{
+        decreaseItemQuantity(id);
+    }
 
   return (
-    <Navbar bg="dark" variant="dark" expand="lg">
+    <>
+    <Navbar bg="dark" variant="dark" expand="lg" style={{position:'fixed', width:'100%', zIndex:'1000'}}>
     <Container>
-      
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mx-auto">
@@ -68,11 +59,11 @@ const Header = () => {
       {isStorePage && (
         <>
         <Button variant="light" onClick={handleShowCartModal}>Cart</Button>
-      <span className="counter">0</span>
+      <span className="counter">{cartElements.length}</span>
         </>
       )}
     </Container>
-    <Modal show={showCartModal} onHide={handleCloseCartModal}>
+    <Modal show={showCartModal} onHide={handleCloseCartModal} size="lg">
         <Modal.Header closeButton>
           <Modal.Title>Shopping Cart</Modal.Title>
         </Modal.Header>
@@ -93,7 +84,13 @@ const Header = () => {
                   <td><img src={item.imageUrl} alt={item.title} style={{ width: '100px' }} /></td>
                   <td>{item.title}</td>
                   <td>${item.price}</td>
-                  <td>{item.quantity}</td>
+                  <td>
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                <Button variant="outline-secondary" onClick={() => handleDecreaseQuantity(item.id)}>-</Button>
+            <span style={{ margin: '0 5px' }}>{item.quantity}</span>
+                 <Button variant="outline-secondary" onClick={() => handleIncreaseQuantity(item.id)}>+</Button>
+            </div>
+                  </td>
                   <td>${item.price * item.quantity}</td>
                   <td>
                     <Button variant="danger" onClick={() => handleRemoveItem(item.id)}>Remove</Button> {/* Remove button */}
@@ -113,7 +110,10 @@ const Header = () => {
         </Modal.Footer>
       </Modal>
   </Navbar>
-
+     <div style={{ paddingTop: navbarHeight + 'px', marginBottom: '10px'}}> {/* Add padding equal to navbar height */}
+     {/* Content below the navbar */}
+   </div>
+   </>
   )
 }
 
