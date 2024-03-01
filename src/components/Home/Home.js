@@ -39,7 +39,7 @@ const Home = () => {
   return (
     <Container fluid>
         <Row className="justify-content-center align-items-center ">
-          <img src={generic} alt="Image" className="img-fluid" />
+          <img src={generic} alt="Image" lassName="img-fluid" style={{ width: '100%', height: '350px' }} />
       </Row>
     <Container>
     <Col className="text-center mb-5 ">
