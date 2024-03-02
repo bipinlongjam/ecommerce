@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom';
 import {useCart} from '../../context/CartContext'
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import generic from '../../assests/generic.png'
@@ -41,6 +42,9 @@ const Store = () => {
               <Card.Img variant="top" src={product.imageUrl} />
               <Card.Body>
                 <Card.Text>Price: ${product.price}</Card.Text>
+                <Button variant="secondary">
+                    <Link to={`/store/${product.id}`}>View Details</Link>
+                  </Button>
                 <Button variant="primary" onClick={()=> handleAddToCart(product)} className='justify-content-end'>Add to Cart</Button>
               </Card.Body>
             </Card>
