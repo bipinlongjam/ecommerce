@@ -1,10 +1,9 @@
-import React, {useEffect, useState} from  'react';
-import { useParams } from 'react-router-dom';
-import { Container, Row, Col, Image, Card, Button } from 'react-bootstrap';
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { Container, Row, Col, Image, Card, Button } from "react-bootstrap";
 
 const ProductPage = () => {
-
-    const { productId } = useParams();
+  const { productId } = useParams();
   const [product, setProduct] = useState(null);
 
   useEffect(() => {
@@ -14,15 +13,17 @@ const ProductPage = () => {
 
   const fetchData = async (productId) => {
     try {
-      const response = await fetch(`./products.json`);
+      const response = await fetch(`../products.json`);
       if (!response.ok) {
-        throw new Error(`Failed to fetch product data: ${response.status} ${response.statusText}`);
+        throw new Error(
+          `Failed to fetch product data: ${response.status} ${response.statusText}`
+        );
       }
       const data = await response.json();
-      const selectedProduct = data.find((product) => product.id === productId);
+      const selectedProduct = data.find((product) => product.id == productId);
       setProduct(selectedProduct);
     } catch (error) {
-      console.error('Error fetching product data:', error);
+      console.error("Error fetching product data:", error);
     }
   };
   return (
@@ -31,15 +32,14 @@ const ProductPage = () => {
         <Row>
           <Col md={6}>
             <h2>{product.title}</h2>
-            <Row className="mb-4">
+            {/* <Row className="mb-4">
               {product.images.map((image, index) => (
                 <Col key={index} xs={6} className="mb-3">
                   <Image src={image} fluid />
                 </Col>
               ))}
-            </Row>
+            </Row> */}
             <h3>Reviews:</h3>
-            
           </Col>
           <Col md={6}>
             <Card>
@@ -57,7 +57,7 @@ const ProductPage = () => {
         <p>Loading...</p>
       )}
     </Container>
-  )
-}
+  );
+};
 
-export default ProductPage
+export default ProductPage;
