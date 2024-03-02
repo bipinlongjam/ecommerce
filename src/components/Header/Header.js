@@ -54,6 +54,7 @@ const Header = () => {
           <Nav.Link as={Link} to="/" className="nav-link-style">Home</Nav.Link>
           <Nav.Link as={Link} to="/store" className="nav-link-style">Store</Nav.Link>
           <Nav.Link as={Link} to="/about" className="nav-link-style">About</Nav.Link>
+          <Nav.Link as={Link} to="/contactus" className="nav-link-style">ContactUs</Nav.Link>
         </Nav>
       </Navbar.Collapse>
       {isStorePage && (
