@@ -23,12 +23,17 @@ const Header = () => {
        decreaseItemQuantity,
        isLoggedIn,
        login,
-       logout} = useCart();
+       logout,
+       fetchCartItems} = useCart();
     const [showCartModal, setShowCartModal] = useState(false);
     const [cartItems, setCartItems] = useState([]);
     const handleShowCartModal = () => setShowCartModal(true);
     const handleCloseCartModal = () => setShowCartModal(false);
-
+    
+    // useEffect(() => {
+    //   fetchCartItems(); // Call fetchCartItems when the component mounts
+    // }, []); 
+    
     const location = useLocation();
 
     const handleCheckout = () => {
