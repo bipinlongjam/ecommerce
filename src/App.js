@@ -11,7 +11,6 @@ import LoginPage from './components/Authentication/LoginPage';
 import Footer from './components/Footer/Footer';
 import { BrowserRouter as Router, Route,Routes, Switch, Link } from 'react-router-dom';
 import { CartProvider, useCart } from './context/CartContext';
-import ProtectedRoute from './components/Authentication/ProtectedRoute';
 
 
 function App() {
