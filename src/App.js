@@ -7,17 +7,23 @@ import Home from './components/Home/Home';
 import About from './components/About/About';
 import ContactUs from './components/ContactUs/ContactUs';
 import ProductPage from './components/Store/ProductPage';
+import LoginPage from './components/Authentication/LoginPage';
 import Footer from './components/Footer/Footer';
 import { BrowserRouter as Router, Route,Routes, Switch, Link } from 'react-router-dom';
-import { CartProvider } from './context/CartContext';
+import { CartProvider, useCart } from './context/CartContext';
+
 
 function App() {
+
+  const {isLoggedIn} = useCart();
+ 
   return (
    <>
    <Router>
     <CartProvider>
     <Header/>
     <Routes>
+    <Route path="/login" element={<LoginPage/>} />
     <Route path="/" element={<Home/>} />
     <Route path="/store" element={<Store/>} />
     <Route path="/store/:productId" element={<ProductPage/>} />

@@ -2,7 +2,13 @@ import React,{createContext, useContext, useState} from 'react'
 
 //Create a new context for the shopping cart
 
-const CartContext = createContext();
+const CartContext = createContext({
+    token: '',
+    isLoggedIn : false,
+    login: (token) => {},
+    logout: () =>{},
+    
+});
 
 //Custom hook to consume the shopping Cart Context
 
@@ -13,7 +19,22 @@ export const useCart = () => useContext(CartContext);
 export const CartProvider =({children}) =>{
 
     const [cartElements, setCartElements] = useState([]);
+    const initialToken = localStorage.getItem('token')
+    const[token, setToken] = useState(initialToken)
 
+
+    const userIsLoggedIn = !!token;
+
+//Login handler
+const loginHandler =(token) =>{
+    setToken(token)
+    localStorage.setItem('token', token);
+}
+//Logout handler
+const logoutHandler =()=>{
+    setToken(null)
+    localStorage.removeItem('token')
+}
 
 // Function to add an item to the cart
 
@@ -68,7 +89,12 @@ const value = {
     clearCart,
     totalAmount,
     increaseItemQuantity,
-    decreaseItemQuantity
+    decreaseItemQuantity,
+    token:token,
+    isLoggedIn:userIsLoggedIn,
+    login:loginHandler,
+    logout:logoutHandler,
+   
 };
 return (
     <CartContext.Provider value={value}>

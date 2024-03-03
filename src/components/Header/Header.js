@@ -16,7 +16,14 @@ const Header = () => {
       }
     }, []);
 
-    const {cartElements, totalAmount, removeCartItem,increaseItemQuantity,decreaseItemQuantity } = useCart();
+    const {cartElements,
+       totalAmount, 
+       removeCartItem,
+       increaseItemQuantity,
+       decreaseItemQuantity,
+       isLoggedIn,
+       login,
+       logout} = useCart();
     const [showCartModal, setShowCartModal] = useState(false);
     const [cartItems, setCartItems] = useState([]);
     const handleShowCartModal = () => setShowCartModal(true);
@@ -33,6 +40,7 @@ const Header = () => {
         }
       };
       const isStorePage = location.pathname === '/store';
+      const isProductPage = location.pathname.startsWith('/store/');
 
     const handleRemoveItem =(id)=>{
         removeCartItem(id);
@@ -55,14 +63,23 @@ const Header = () => {
           <Nav.Link as={Link} to="/store" className="nav-link-style">Store</Nav.Link>
           <Nav.Link as={Link} to="/about" className="nav-link-style">About</Nav.Link>
           <Nav.Link as={Link} to="/contactus" className="nav-link-style">ContactUs</Nav.Link>
+          {isLoggedIn && ( // Only render the logout button if the user is logged in
+      <Link to="/login">
+      <Button variant="light" onClick={logout}>Logout</Button>
+      </Link> 
+          )}
+      {!isLoggedIn && (
+          <Button variant="primary" onClick={login}>Login</Button>
+        )}
         </Nav>
       </Navbar.Collapse>
-      {isStorePage && (
+      {(isStorePage || isProductPage) && (
         <>
         <Button variant="light" onClick={handleShowCartModal}>Cart</Button>
       <span className="counter">{cartElements.length}</span>
         </>
       )}
+
     </Container>
     <Modal show={showCartModal} onHide={handleCloseCartModal} size="lg">
         <Modal.Header closeButton>
@@ -107,11 +124,12 @@ const Header = () => {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseCartModal}>Close</Button>
-          <Button variant="primary" onClick={handleCheckout }>Checkout</Button>
+          <Button variant="primary" onClick={handleCheckout}>Checkout</Button>
         </Modal.Footer>
       </Modal>
   </Navbar>
-     <div style={{ paddingTop: navbarHeight + 'px', marginBottom: '10px'}}> {/* Add padding equal to navbar height */}
+     <div style={{ paddingTop: navbarHeight + 'px', marginBottom: '10px'}}>
+      {/* Add padding equal to navbar height */}
      {/* Content below the navbar */}
    </div>
    </>

@@ -12,8 +12,7 @@ const About = () => {
           <h2 className="mt-3">About Us</h2>
         </Col>
       </Row>
-      <Container className="mt-5 mb-5">
-            
+      <Container className="mt-5 mb-5">    
       <Row>
         <Col md={4} className="d-flex align-items-center">
           <div className="about-image-container">

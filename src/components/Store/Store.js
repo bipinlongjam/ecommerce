@@ -42,10 +42,12 @@ const Store = () => {
               <Card.Img variant="top" src={product.imageUrl} />
               <Card.Body>
                 <Card.Text>Price: ${product.price}</Card.Text>
-                <Button variant="secondary">
-                    <Link to={`/store/${product.id}`}>View Details</Link>
+                <div className='btns'>
+                <Button variant="secondary" className="btn btn-light" size="sm">
+                    <Link to={`/store/${product.id}`} className="text-black">View Details</Link>
                   </Button>
-                <Button variant="primary" onClick={()=> handleAddToCart(product)} className='justify-content-end'>Add to Cart</Button>
+                <Button variant="primary" onClick={()=> handleAddToCart(product)} className='justify-content-end' size="sm">Add to Cart</Button>
+                </div>
               </Card.Body>
             </Card>
           </Col>
