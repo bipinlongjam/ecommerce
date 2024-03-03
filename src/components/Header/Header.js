@@ -30,9 +30,9 @@ const Header = () => {
     const handleShowCartModal = () => setShowCartModal(true);
     const handleCloseCartModal = () => setShowCartModal(false);
     
-    // useEffect(() => {
-    //   fetchCartItems(); // Call fetchCartItems when the component mounts
-    // }, []); 
+    useEffect(() => {
+      fetchCartItems(); // Call fetchCartItems when the component mounts
+    }, []); 
     
     const location = useLocation();
 
