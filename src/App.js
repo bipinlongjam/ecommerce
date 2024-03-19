@@ -1,27 +1,29 @@
-
-import './App.css';
-import { Button } from 'react-bootstrap';
+import React,{Suspense} from 'react';
+import { BrowserRouter as Router, Route,Routes } from 'react-router-dom';
+import { CartProvider } from './context/CartContext';
 import Header from './components/Header/Header';
-import Store from './components/Store/Store';
-import Home from './components/Home/Home';
-import About from './components/About/About';
-import ContactUs from './components/ContactUs/ContactUs';
-import ProductPage from './components/Store/ProductPage';
-import LoginPage from './components/Authentication/LoginPage';
 import Footer from './components/Footer/Footer';
-import { BrowserRouter as Router, Route,Routes, Switch, Link } from 'react-router-dom';
-import { CartProvider, useCart } from './context/CartContext';
 
+
+
+//Lazy loaded components
+
+const Home = React.lazy(() => import('./components/Home/Home'));
+const Store = React.lazy(() => import('./components/Store/Store'))
+const ProductPage = React.lazy(() => import('./components/Store/ProductPage'));
+const About = React.lazy(() => import('./components/About/About'));
+const ContactUs = React.lazy(() => import('./components/ContactUs/ContactUs'));
+const LoginPage = React.lazy(() => import('./components/Authentication/LoginPage'));
 
 function App() {
 
-  const {isLoggedIn} = useCart();
- 
+  
   return (
    <>
    <Router>
     <CartProvider>
     <Header/>
+    <Suspense fallback={<div>Loading...</div>}>
     <Routes>
     <Route path="/login" element={<LoginPage/>} />
     <Route path="/" element={<Home/>} />
@@ -30,6 +32,7 @@ function App() {
     <Route path="/about" element={<About/>} />
     <Route path="/contactus" element={<ContactUs/>} />
     </Routes>
+    </Suspense>
     <Footer/>
     </CartProvider>
   </Router>

@@ -42,7 +42,7 @@ const Home = () => {
   return (
     <Container fluid>
         <Row className="justify-content-center align-items-center ">
-          <img src={generic} alt="Image" lassName="img-fluid" style={{ width: '100%', height: '350px' }} />
+          <img src={generic} alt="backfoto" lassName="img-fluid" style={{ width: '100%', height: '350px' }} />
           <div className="overlay">
           <Button className="album-btn" style={{ marginTop: '50px',backgroundColor: 'transparent', color:'black' }}>Get our latest album</Button>
           <div className="play-icon-circle">

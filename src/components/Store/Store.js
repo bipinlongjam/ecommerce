@@ -28,7 +28,7 @@ const Store = () => {
   return (
     <Container fluid>
       <Row className="justify-content-center align-items-center ">
-          <img src={generic} alt="Image"  className="img-fluid" style={{ width: '100%', height: '350px' }} />
+          <img src={generic} alt="backfoto"  className="img-fluid" style={{ width: '100%', height: '350px' }} />
         <Col className="text-center mb-5">
           <h2 className="mt-3">Store</h2>
         </Col>

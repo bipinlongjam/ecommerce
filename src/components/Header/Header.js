@@ -1,6 +1,6 @@
 import React,{useState, useEffect} from 'react'
 import {Navbar, Container, Button, Nav, Modal,Table } from 'react-bootstrap'
-import { Link ,useLocation} from 'react-router-dom';
+import { Link ,useLocation, useNavigate} from 'react-router-dom';
 import {useCart} from '../../context/CartContext'
 import './Header.css'
 
@@ -24,21 +24,28 @@ const Header = () => {
        isLoggedIn,
        login,
        logout,
-       fetchCartItems} = useCart();
+      // fetchCartItems
+      } = useCart();
     const [showCartModal, setShowCartModal] = useState(false);
     const [cartItems, setCartItems] = useState([]);
     const handleShowCartModal = () => setShowCartModal(true);
     const handleCloseCartModal = () => setShowCartModal(false);
     
-    useEffect(() => {
-      fetchCartItems(); // Call fetchCartItems when the component mounts
-    }, []); 
+    // useEffect(() => {
+    //   fetchCartItems(); // Call fetchCartItems when the component mounts
+    // }, []); 
     
     const location = useLocation();
+    const navigate = useNavigate();
+    
+    const handleLoginClick = () => {
+      // Navigate to the '/login' route
+      navigate('/login');
+    };
 
     const handleCheckout = () => {
         if (cartItems.length === 0) {
-          alert('No products in the cart!');
+          alert('Order success!');
         } else {
           // Handle checkout logic here
           console.log('Checkout');
@@ -76,7 +83,7 @@ const Header = () => {
       </Link> 
           )}
       {!isLoggedIn && (
-          <Button variant="primary" onClick={login}>Login</Button>
+          <Button variant="primary" onClick={handleLoginClick}>Login</Button>
         )}
         </Nav>
       </Navbar.Collapse>
